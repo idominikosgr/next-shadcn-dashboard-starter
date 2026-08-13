@@ -1,0 +1,75 @@
+/**
+ * @preset Retro Arcade
+ * @category community
+ * @description Retro gaming arcade theme with pixel font
+ */
+
+:root[data-theme-preset="retro-arcade"] {
+  --radius: 0rem;
+  --font-sans: "Press Start 2P", monospace;
+  --background: #f5f5f5;
+  --foreground: #1a1a2e;
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a2e;
+  --primary: #e94560;
+  --primary-foreground: #ffffff;
+  --secondary: #16213e;
+  --secondary-foreground: #ffffff;
+  --muted: #eaeaea;
+  --muted-foreground: #666666;
+  --accent: #0f3460;
+  --accent-foreground: #ffffff;
+  --destructive: #ff0000;
+  --border: #d0d0d0;
+  --input: #ffffff;
+  --ring: #e94560;
+  --chart-1: #e94560;
+  --chart-2: #0f3460;
+  --chart-3: #16213e;
+  --chart-4: #1a1a2e;
+  --chart-5: #533483;
+  --sidebar: #eaeaea;
+  --sidebar-foreground: #1a1a2e;
+  --sidebar-primary: #e94560;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #0f3460;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #d0d0d0;
+  --sidebar-ring: #e94560;
+}
+
+.dark[data-theme-preset="retro-arcade"] {
+  --background: #1a1a2e;
+  --foreground: #eaeaea;
+  --card: #16213e;
+  --card-foreground: #eaeaea;
+  --popover: #16213e;
+  --popover-foreground: #eaeaea;
+  --primary: #e94560;
+  --primary-foreground: #ffffff;
+  --secondary: #0f3460;
+  --secondary-foreground: #eaeaea;
+  --muted: #2a2a4e;
+  --muted-foreground: #a0a0a0;
+  --accent: #533483;
+  --accent-foreground: #eaeaea;
+  --destructive: #ff0000;
+  --border: #0f3460;
+  --input: #16213e;
+  --ring: #e94560;
+  --chart-1: #e94560;
+  --chart-2: #533483;
+  --chart-3: #0f3460;
+  --chart-4: #16213e;
+  --chart-5: #00fff5;
+  --sidebar: #0f0f1e;
+  --sidebar-foreground: #eaeaea;
+  --sidebar-primary: #e94560;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #533483;
+  --sidebar-accent-foreground: #eaeaea;
+  --sidebar-border: #0f3460;
+  --sidebar-ring: #e94560;
+}

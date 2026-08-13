@@ -62,7 +62,12 @@ function ChartContainer({
       >
         <ChartStyle id={chartId} config={config} />
         {/* adding debounce will fix chart laggy behavior while animating */}
-        <RechartsPrimitive.ResponsiveContainer debounce={2000}>
+        {/* minWidth/minHeight prevent ResponsiveContainer warnings during navigation */}
+        <RechartsPrimitive.ResponsiveContainer
+          debounce={2000}
+          minWidth={0}
+          minHeight={0}
+        >
           {children}
         </RechartsPrimitive.ResponsiveContainer>
       </div>
@@ -105,6 +110,25 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+type ChartPayloadRecord = Record<string, unknown> & {
+  fill?: string;
+};
+
+type ChartTooltipItem = {
+  dataKey?: string | number;
+  name?: string;
+  value?: number | string;
+  color?: string;
+  payload: ChartPayloadRecord;
+};
+
+type ChartLegendItem = {
+  value?: string | number;
+  dataKey?: string | number;
+  color?: string;
+  payload?: ChartPayloadRecord;
+};
+
 function ChartTooltipContent({
   active,
   payload,
@@ -119,14 +143,29 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<'div'> & {
-    hideLabel?: boolean;
-    hideIndicator?: boolean;
-    indicator?: 'line' | 'dot' | 'dashed';
-    nameKey?: string;
-    labelKey?: string;
-  }) {
+}: React.ComponentProps<'div'> & {
+  active?: boolean;
+  payload?: ChartTooltipItem[];
+  label?: string;
+  labelFormatter?: (
+    value: React.ReactNode,
+    payload: ChartTooltipItem[]
+  ) => React.ReactNode;
+  labelClassName?: string;
+  formatter?: (
+    value: number | string | undefined,
+    name: string,
+    item: ChartTooltipItem,
+    index: number,
+    payload: ChartPayloadRecord
+  ) => React.ReactNode;
+  color?: string;
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: 'line' | 'dot' | 'dashed';
+  nameKey?: string;
+  labelKey?: string;
+}) {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -174,9 +213,10 @@ function ChartTooltipContent({
   return (
     <div
       className={cn(
-        'border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl',
+        'border-border/50 bg-background grid min-w-32 items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs',
         className
       )}
+      style={{ boxShadow: 'var(--elevation-5)' }}
     >
       {!nestLabel ? tooltipLabel : null}
       <div className='grid gap-1.5'>
@@ -203,7 +243,7 @@ function ChartTooltipContent({
                     !hideIndicator && (
                       <div
                         className={cn(
-                          'shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)',
+                          'border-border shrink-0 rounded-[2px] bg-(--color-bg)',
                           {
                             'h-2.5 w-2.5': indicator === 'dot',
                             'w-1': indicator === 'line',
@@ -257,11 +297,12 @@ function ChartLegendContent({
   payload,
   verticalAlign = 'bottom',
   nameKey
-}: React.ComponentProps<'div'> &
-  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-    hideIcon?: boolean;
-    nameKey?: string;
-  }) {
+}: React.ComponentProps<'div'> & {
+  payload?: ChartLegendItem[];
+  verticalAlign?: 'top' | 'bottom';
+  hideIcon?: boolean;
+  nameKey?: string;
+}) {
   const { config } = useChart();
 
   if (!payload?.length) {

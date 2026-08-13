@@ -10,7 +10,10 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { BaseFormFieldProps, FileUploadConfig } from '@/types/base-form';
-import { FileUploader, FileUploaderProps } from '@/components/file-uploader';
+import {
+  FileUploader,
+  type FileUploaderProps
+} from '@/components/ui/file-upload';
 
 interface FormFileUploadProps<
   TFieldValues extends FieldValues = FieldValues,

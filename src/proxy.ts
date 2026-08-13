@@ -1,11 +1,19 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { NextRequest } from 'next/server';
+// TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable
+// import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+// import { NextRequest } from 'next/server';
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)']);
+// const isProtectedRoute = createRouteMatcher(['/dashboard(.*)']);
 
-export default clerkMiddleware(async (auth, req: NextRequest) => {
-  if (isProtectedRoute(req)) await auth.protect();
-});
+// export default clerkMiddleware(async (auth, req: NextRequest) => {
+//   if (isProtectedRoute(req)) await auth.protect();
+// });
+
+import { NextResponse } from 'next/server';
+
+export default function middleware() {
+  return NextResponse.next();
+}
+
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params

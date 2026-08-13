@@ -1,0 +1,89 @@
+/**
+ * @preset Cyberpunk
+ * @category community
+ * @description Neon cyberpunk theme with magenta and cyan
+ */
+
+:root[data-theme-preset="cyberpunk"] {
+  --radius: 0rem;
+  --font-sans: JetBrains Mono, monospace;
+  /* Extended: Cyberpunk style - sharp edges, neon glow */
+  --border-width: 1px;
+  --glass-blur: 16px;
+  --glass-opacity: 0.9;
+
+  --background: #fef9e7;
+  --foreground: #1a0f2e;
+  --card: #ffffff;
+  --card-foreground: #1a0f2e;
+  --popover: #ffffff;
+  --popover-foreground: #1a0f2e;
+  --primary: #ff00ff;
+  --primary-foreground: #ffffff;
+  --secondary: #e0f7fa;
+  --secondary-foreground: #1a0f2e;
+  --muted: #f5f5dc;
+  --muted-foreground: #4a4a4a;
+  --accent: #00ffff;
+  --accent-foreground: #1a0f2e;
+  --destructive: #ff1744;
+  --border: #d1c4e9;
+  --input: #e8d5e8;
+  --ring: #ff00ff;
+  --chart-1: #ff00ff;
+  --chart-2: #00ffff;
+  --chart-3: #ffff00;
+  --chart-4: #ff6600;
+  --chart-5: #00ff00;
+  --sidebar: #f9f3e3;
+  --sidebar-foreground: #1a0f2e;
+  --sidebar-primary: #ff00ff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #00ffff;
+  --sidebar-accent-foreground: #1a0f2e;
+  --sidebar-border: #d1c4e9;
+  --sidebar-ring: #ff00ff;
+}
+
+.dark[data-theme-preset="cyberpunk"] {
+  /* Extended: Dark cyberpunk - neon glow shadows */
+  --elevation-1: 0 0 5px #ff00ff40, 0 0 10px #00ffff20;
+  --elevation-2: 0 0 10px #ff00ff50, 0 0 20px #00ffff30;
+  --elevation-3: 0 0 15px #ff00ff60, 0 0 30px #00ffff40;
+  --elevation-4: 0 0 20px #ff00ff70, 0 0 40px #00ffff50;
+  --elevation-5: 0 0 30px #ff00ff80, 0 0 60px #00ffff60;
+  --glass-blur: 20px;
+  --glass-opacity: 0.7;
+
+  --background: #0d0221;
+  --foreground: #ff00ff;
+  --card: #190a38;
+  --card-foreground: #e0e0e0;
+  --popover: #190a38;
+  --popover-foreground: #e0e0e0;
+  --primary: #ff00ff;
+  --primary-foreground: #0d0221;
+  --secondary: #2a1a4a;
+  --secondary-foreground: #00ffff;
+  --muted: #2a1a4a;
+  --muted-foreground: #b0b0b0;
+  --accent: #00ffff;
+  --accent-foreground: #0d0221;
+  --destructive: #ff1744;
+  --border: #ff00ff;
+  --input: #2a1a4a;
+  --ring: #00ffff;
+  --chart-1: #ff00ff;
+  --chart-2: #00ffff;
+  --chart-3: #ffff00;
+  --chart-4: #ff6600;
+  --chart-5: #00ff00;
+  --sidebar: #080015;
+  --sidebar-foreground: #ff00ff;
+  --sidebar-primary: #00ffff;
+  --sidebar-primary-foreground: #0d0221;
+  --sidebar-accent: #2a1a4a;
+  --sidebar-accent-foreground: #00ffff;
+  --sidebar-border: #ff00ff;
+  --sidebar-ring: #00ffff;
+}

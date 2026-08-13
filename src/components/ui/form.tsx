@@ -37,6 +37,10 @@ const Form = <TFieldValues extends FieldValues = FieldValues>({
   );
 };
 
+// Alternative Form component that matches shadcn/ui spread pattern
+// Usage: <FormRoot {...form}><form>...</form></FormRoot>
+const FormRoot = FormProvider;
+
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -178,6 +182,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
 export {
   useFormField,
   Form,
+  FormRoot,
   FormItem,
   FormLabel,
   FormControl,

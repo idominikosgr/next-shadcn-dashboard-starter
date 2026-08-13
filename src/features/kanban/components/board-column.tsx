@@ -93,15 +93,24 @@ export function BoardColumn({ column, tasks, isOverlay }: BoardColumnProps) {
           defaultValue={column.title}
           className="text-base mt-0! mr-auto"
         /> */}
-        <ColumnActions id={column.id} title={column.title} />
+        <ColumnActions
+          id={column.id}
+          title={column.title}
+          taskCount={tasks.length}
+        />
       </CardHeader>
-      <CardContent className='flex grow flex-col gap-4 overflow-x-hidden p-2'>
+      <CardContent className='flex grow flex-col gap-2 overflow-x-hidden p-2'>
         <ScrollArea className='h-full'>
           <SortableContext items={tasksIds}>
             {tasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
           </SortableContext>
+          {tasks.length === 0 && !isOverlay && (
+            <div className='text-muted-foreground flex h-24 items-center justify-center rounded-lg border-2 border-dashed text-sm'>
+              No tasks yet
+            </div>
+          )}
         </ScrollArea>
       </CardContent>
     </Card>

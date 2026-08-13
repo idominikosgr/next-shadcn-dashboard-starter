@@ -1,0 +1,457 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.3/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "maxSize": 2097152,
+    "includes": [
+      "**/*.{js,jsx,ts,tsx,mjs,cjs}",
+      "!**/*.d.ts",
+      "**/*.{json,jsonc}",
+      "**/*.{css,scss,sass}"
+    ]
+  },
+
+  // ==========================================================================
+  // FORMATTER
+  // Opinionated settings for consistency across rapid dev cycles.
+  // ==========================================================================
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "lineEnding": "lf",
+    "useEditorconfig": true
+  },
+
+  // ==========================================================================
+  // LINTER
+  //
+  // Philosophy:
+  //   ERROR   → will break at runtime / silently corrupt data / crash
+  //   WARN    → type slop, dead code, practices that hurt you later
+  //   OFF     → stylistic noise that slows down rapid prototyping
+  // ==========================================================================
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "next": "recommended"
+    },
+    "rules": {
+      "recommended": true,
+
+      // -----------------------------------------------------------------------
+      // A11Y - accessibility rules
+      // -----------------------------------------------------------------------
+      "a11y": {
+        "noLabelWithoutControl": "warn",
+        "useButtonType": "warn",
+        "useKeyWithClickEvents": "warn",
+        "noStaticElementInteractions": "warn",
+        "noSvgWithoutTitle": "warn",
+        "useSemanticElements": "warn",
+        "useFocusableInteractive": "warn",
+        "useAriaPropsForRole": "warn",
+        "noNoninteractiveElementToInteractiveRole": "warn",
+        "useHtmlLang": "warn",
+        "useValidLang": "warn",
+        "useAltText": "warn",
+        "noAriaHiddenOnFocusable": "warn",
+        "noAccessKey": "warn",
+        "useValidAriaRole": "warn"
+      },
+
+      // -----------------------------------------------------------------------
+      // CORRECTNESS - things that crash or silently misbehave
+      // -----------------------------------------------------------------------
+      "correctness": {
+        // Absolute runtime crashers
+        "noConstAssign": "error",
+        "noInvalidConstructorSuper": "error",
+        "noUnsafeFinally": "error",
+        "noUnsafeOptionalChaining": "error",
+        "noUnreachable": "error",
+        "noSetterReturn": "error",
+        "noConstructorReturn": "error",
+        "noGlobalObjectCalls": "error",
+        "noInvalidBuiltinInstantiation": "error",
+
+        // Type coercion foot-guns
+        "useIsNan": "error",
+        "useValidTypeof": "error",
+        "noVoidTypeReturn": "error",
+        "noEmptyPattern": "error",
+
+        // Dead code - warn, not block (stash-and-iterate is real)
+        "noUnusedVariables": "warn",
+        "noUnusedImports": "warn",
+        "noUnusedLabels": "warn",
+        "noUnusedPrivateClassMembers": "warn",
+        "noUnusedFunctionParameters": "off",
+
+        // React
+        "useJsxKeyInIterable": "error",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error",
+        "noChildrenProp": "warn",
+        "noVoidElementsWithChildren": "error"
+      },
+
+      // -----------------------------------------------------------------------
+      // SUSPICIOUS - silent failures, null hazards, unsafe types
+      // -----------------------------------------------------------------------
+      "suspicious": {
+        // Logic bugs that never throw but always break
+        "noCompareNegZero": "error",
+        "noDoubleEquals": "error",
+        "noSelfCompare": "error",
+        "noUnsafeNegation": "error",
+        "noCatchAssign": "error",
+        "noDebugger": "warn",
+
+        // Unsafe types - warn during prototyping, fix before shipping
+        "noExplicitAny": "error",
+        "noImplicitAnyLet": "error",
+
+        // Structural duplicates that always produce wrong behavior
+        "noDuplicateObjectKeys": "error",
+        "noDuplicateClassMembers": "error",
+        "noDuplicateCase": "error",
+        "noDuplicateParameters": "error",
+        "noDuplicateElseIf": "error",
+        "noFallthroughSwitchClause": "error",
+        "noConstantBinaryExpressions": "error",
+
+        // Type system correctness
+        "noConfusingVoidType": "error",
+        "noUnsafeDeclarationMerging": "error",
+        "noRedeclare": "error",
+        "noShadowRestrictedNames": "error",
+        "noFunctionAssign": "error",
+        "noClassAssign": "error",
+        "noImportAssign": "error",
+
+        // Console: off during dev - you need it
+        "noConsole": "off",
+        // useAwait: warn rather than off - unhandled async is a real footgun
+        "useAwait": "warn"
+      },
+
+      // -----------------------------------------------------------------------
+      // NURSERY - experimental but worth catching early
+      // -----------------------------------------------------------------------
+      "nursery": {
+        // Floating promises kill features silently - keep as warn not error
+        "noFloatingPromises": "warn",
+        "useAwaitThenable": "warn",
+        // Switch exhaustiveness: warn to surface missing branches
+        "useExhaustiveSwitchCases": "warn",
+        // Unnecessary conditions: off - too noisy during rapid iteration
+        "noUnnecessaryConditions": "off"
+      },
+
+      // -----------------------------------------------------------------------
+      // COMPLEXITY - useless constructs
+      // -----------------------------------------------------------------------
+      "complexity": {
+        "noUselessCatch": "warn",
+        "noUselessLabel": "warn",
+        "noUselessTernary": "warn",
+        "noUselessConstructor": "warn",
+        "noUselessFragments": "warn",
+        "noUselessRename": "warn",
+        "noUselessThisAlias": "warn"
+      },
+
+      // -----------------------------------------------------------------------
+      // PERFORMANCE
+      // -----------------------------------------------------------------------
+      "performance": {
+        "noAccumulatingSpread": "warn",
+        "noDelete": "warn"
+      },
+
+      // -----------------------------------------------------------------------
+      // SECURITY - non-negotiable even in prototypes
+      // -----------------------------------------------------------------------
+      "security": {
+        "noGlobalEval": "error",
+        "noDangerouslySetInnerHtml": "warn",
+        "noDangerouslySetInnerHtmlWithChildren": "error"
+      },
+
+      // -----------------------------------------------------------------------
+      // STYLE - light touch, don't block iteration
+      // -----------------------------------------------------------------------
+      "style": {
+        "useConst": "warn",
+        "useTemplate": "off",
+        "useExportType": "off",
+        "useImportType": "off",
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
+
+  // ==========================================================================
+  // JAVASCRIPT / TYPESCRIPT
+  // ==========================================================================
+  "javascript": {
+    "globals": [
+      "React",
+      "JSX",
+      "NodeJS"
+    ],
+    "parser": {
+      "jsxEverywhere": false,
+      "unsafeParameterDecoratorsEnabled": true
+    },
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "trailingCommas": "es5",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always"
+    }
+  },
+
+  // ==========================================================================
+  // JSON
+  // ==========================================================================
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    },
+    "formatter": {
+      "enabled": true,
+      "trailingCommas": "none"
+    }
+  },
+
+  // ==========================================================================
+  // CSS - with Tailwind directives enabled
+  // ==========================================================================
+  "css": {
+    "parser": {
+      "cssModules": false,
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "double",
+      "lineWidth": 100,
+      "indentStyle": "space",
+      "indentWidth": 2
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+
+  // ==========================================================================
+  // OVERRIDES
+  // ==========================================================================
+  "overrides": [
+    // -------------------------------------------------------------------------
+    // Next.js - route conventions require default exports
+    // Uncomment if using Next.js
+    // -------------------------------------------------------------------------
+    {
+       "includes": [
+         "**/app/**/{page,layout,loading,error,not-found,default,template,route}.{js,jsx,ts,tsx}",
+         "**/pages/**/*.{js,jsx,ts,tsx}",
+         "**/pages/api/**/*.{js,ts}",
+         "**/middleware.{js,ts}",
+         "**/proxy.{js,ts}",
+         "**/instrumentation.{js,ts}"
+       ],
+       "linter": {
+         "rules": {
+           "style": { "noDefaultExport": "off" },
+           "suspicious": { "noConsole": "off" }
+         }
+       }
+    },
+
+    // -------------------------------------------------------------------------
+    // Server / tRPC - floating promises are expected, console is fine
+    // -------------------------------------------------------------------------
+    // {
+    //   "includes": [
+    //     "**/actions/**/*.{js,ts}",
+    //     "**/server/**/*.{js,ts}",
+    //     "**/*.server.{js,ts}",
+    //     "**/trpc/**/*.{js,ts}"
+    //   ],
+    //   "linter": {
+    //     "rules": {
+    //       "suspicious": { "noConsole": "off" },
+    //       "nursery": { "noFloatingPromises": "error" }
+    //     }
+    //   }
+    // },
+
+    // -------------------------------------------------------------------------
+    // Config files - default exports required, console fine, env globals ok
+    // -------------------------------------------------------------------------
+    {
+      "includes": [
+        "*.config.{js,ts,mjs,cjs}",
+        "**/tailwind.config.{js,ts}",
+        "**/postcss.config.{js,ts}",
+        "**/prettier.config.{js,ts}",
+        "**/eslint.config.{js,ts}",
+        "**/drizzle.config.{js,ts}",
+        "**/playwright.config.{js,ts}",
+        "**/tsup.config.{js,ts}",
+        "**/vite.config.{js,ts,mjs}",
+        "**/vitest.config.{js,ts}",
+        "**/astro.config.{js,ts,mjs}"
+      ],
+      "linter": {
+        "rules": {
+          "style": { "noDefaultExport": "off" },
+          "suspicious": { "noConsole": "off" },
+          "correctness": { "noUndeclaredVariables": "off" }
+        }
+      }
+    },
+
+    // -------------------------------------------------------------------------
+    // Test files - anything goes, assertions use any, console is debug output
+    // -------------------------------------------------------------------------
+    {
+      "includes": [
+        "**/*.{test,spec}.{js,jsx,ts,tsx}",
+        "**/__tests__/**",
+        "**/__mocks__/**",
+        "**/tests/**",
+        "**/test/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noConsole": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedFunctionParameters": "off"
+          },
+          "nursery": {
+            "noFloatingPromises": "off"
+          }
+        }
+      }
+    },
+
+    // -------------------------------------------------------------------------
+    // Type definitions - any is expected, unused types are fine
+    // -------------------------------------------------------------------------
+    {
+      "includes": [
+        "**/*.d.ts",
+        "**/types/**",
+        "**/src/types/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": { "noExplicitAny": "warn" },
+          "correctness": { "noUnusedVariables": "off" },
+          "style": { "noDefaultExport": "off" }
+        }
+      }
+    },
+
+    // -------------------------------------------------------------------------
+    // Components - default exports standard in React component files
+    // -------------------------------------------------------------------------
+    {
+      "includes": [
+        "**/components/**/*.{jsx,tsx}",
+        "**/ui/**/*.{jsx,tsx}",
+        "**/src/components/**/*.{jsx,tsx}"
+      ],
+      "linter": {
+        "rules": {
+          "style": { "noDefaultExport": "off" }
+        }
+      }
+    },
+
+    // -------------------------------------------------------------------------
+    // Scripts & CLI - console is the output mechanism
+    // -------------------------------------------------------------------------
+    {
+      "includes": [
+        "**/scripts/**",
+        "**/bin/**",
+        "**/cli/**",
+        "**/.scripts/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": { "noConsole": "off" },
+          "correctness": { "noUnusedFunctionParameters": "off" }
+        }
+      }
+    },
+
+    // -------------------------------------------------------------------------
+    // CSS - correctness rules (per-rule config only works in overrides)
+    // -------------------------------------------------------------------------
+    {
+      "includes": ["**/*.{css,scss,sass}"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnknownProperty": "warn",
+            "noUnknownUnit": "error",
+            "noUnknownPseudoClass": "warn",
+            "noUnknownPseudoElement": "warn",
+            "noUnknownFunction": "warn",
+            "noUnknownMediaFeatureName": "warn",
+            "noInvalidPositionAtImportRule": "error",
+            "noInvalidGridAreas": "error",
+            "noUnmatchableAnbSelector": "error"
+          }
+        }
+      }
+    },
+
+    // -------------------------------------------------------------------------
+    // DB migrations - generated code, don't touch
+    // -------------------------------------------------------------------------
+    {
+      "includes": [
+        "**/migrations/**",
+        "**/drizzle/**/*.sql",
+        "**/__generated__/**",
+        "**/generated/**"
+      ],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ],
+
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}

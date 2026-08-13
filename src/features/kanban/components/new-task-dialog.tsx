@@ -12,11 +12,24 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-
-import { useTaskStore } from '../utils/store';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useTaskStore, Priority } from '../utils/store';
+import userData from '@/constants/user-data.json';
+import { useState } from 'react';
 
 export default function NewTaskDialog() {
   const addTask = useTaskStore((state) => state.addTask);
+  const [open, setOpen] = useState(false);
+  const [priority, setPriority] = useState<Priority>('medium');
+  const [assigneeId, setAssigneeId] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,52 +38,122 @@ export default function NewTaskDialog() {
     const formData = new FormData(form);
     const { title, description } = Object.fromEntries(formData);
 
-    if (typeof title !== 'string' || typeof description !== 'string') return;
-    addTask(title, description);
+    if (typeof title !== 'string') return;
+
+    const selectedUser = userData.find((u) => u.id.toString() === assigneeId);
+    const assignee = selectedUser
+      ? { name: selectedUser.name, avatar: selectedUser.avatar }
+      : undefined;
+
+    addTask(
+      title,
+      typeof description === 'string' ? description : undefined,
+      priority,
+      assignee
+    );
+
+    // Reset form
+    form.reset();
+    setPriority('medium');
+    setAssigneeId('');
+    setOpen(false);
+  };
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase();
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant='secondary' size='sm'>
-          ＋ Add New Todo
+          ＋ Add New Task
         </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='sm:max-w-[500px]'>
         <DialogHeader>
-          <DialogTitle>Add New Todo</DialogTitle>
+          <DialogTitle>Add New Task</DialogTitle>
           <DialogDescription>
-            What do you want to get done today?
+            Create a new task in the Todo column.
           </DialogDescription>
         </DialogHeader>
-        <form
-          id='todo-form'
-          className='grid gap-4 py-4'
-          onSubmit={handleSubmit}
-        >
-          <div className='grid grid-cols-4 items-center gap-4'>
+        <form id='todo-form' className='space-y-4' onSubmit={handleSubmit}>
+          <div className='space-y-2'>
+            <Label htmlFor='title'>Title *</Label>
             <Input
               id='title'
               name='title'
-              placeholder='Todo title...'
-              className='col-span-4'
+              placeholder='Enter task title...'
+              required
             />
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
+
+          <div className='space-y-2'>
+            <Label htmlFor='description'>Description</Label>
             <Textarea
               id='description'
               name='description'
-              placeholder='Description...'
-              className='col-span-4'
+              placeholder='Provide task details...'
+              rows={3}
             />
           </div>
+
+          <div className='space-y-2'>
+            <Label htmlFor='assignee'>Assignee</Label>
+            <Select value={assigneeId} onValueChange={setAssigneeId}>
+              <SelectTrigger>
+                <SelectValue placeholder='Select assignee' />
+              </SelectTrigger>
+              <SelectContent>
+                {userData.map((user) => (
+                  <SelectItem key={user.id} value={user.id.toString()}>
+                    <div className='flex items-center gap-2'>
+                      <Avatar className='h-5 w-5'>
+                        <AvatarImage src={user.avatar} alt={user.name} />
+                        <AvatarFallback className='text-[8px]'>
+                          {getInitials(user.name)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span>{user.name}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className='space-y-2'>
+            <Label htmlFor='priority'>Priority</Label>
+            <Select
+              value={priority}
+              onValueChange={(value: Priority) => setPriority(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder='Select priority' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value='low'>Low</SelectItem>
+                <SelectItem value='medium'>Medium</SelectItem>
+                <SelectItem value='high'>High</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </form>
-        <DialogFooter>
-          <DialogTrigger asChild>
-            <Button type='submit' size='sm' form='todo-form'>
-              Add Todo
-            </Button>
-          </DialogTrigger>
+        <DialogFooter className='pt-4'>
+          <Button
+            type='button'
+            variant='outline'
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button type='submit' form='todo-form'>
+            Create Task
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

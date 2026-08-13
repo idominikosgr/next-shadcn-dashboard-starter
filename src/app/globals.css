@@ -1,10 +1,17 @@
 @import 'tailwindcss';
-
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
+/* Additional theme variants */
 @import './theme.css';
+
+/* Theme preset styles */
+@import '../styles/presets/index.css';
+
+/* Calendar styles: FullCalendar theme integration */
+@import '../styles/calendar.css';
+
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --radius: 0.625rem;
@@ -23,6 +30,7 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -39,6 +47,100 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Extended: Status colors */
+  --warning: oklch(0.75 0.15 80);
+  --warning-foreground: oklch(0.2 0 0);
+  --success: oklch(0.7 0.2 145);
+  --success-foreground: oklch(0.2 0 0);
+  --info: oklch(0.6 0.15 250);
+  --info-foreground: oklch(0.98 0 0);
+
+  /* Extended: Font customization */
+  --font-sans:
+    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo,
+    monospace;
+
+  /* Extended: Shadows */
+  --shadow-2xs: 0 1px 2px 0 oklch(0 0 0 / 0.03);
+  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+  --shadow: 0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.1), 0 8px 10px -6px oklch(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.25);
+  --shadow-none: 0 0 0 0 transparent;
+
+  /* Extended: Transitions */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Extended: Z-index scale */
+  --z-base: 0;
+  --z-raised: 1;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-popover: 50;
+  --z-toast: 100;
+  --z-tooltip: 1000;
+  --z-command: 9999;
+
+  /* Extended: Spacing */
+  --spacing: 0.25rem;
+
+  /* Extended: Elevation system (semantic shadows) */
+  --elevation-1: var(--shadow-xs); /* subtle lift: buttons, inputs */
+  --elevation-2: var(--shadow-sm); /* card level */
+  --elevation-3: var(--shadow-md); /* dropdown, popover */
+  --elevation-4: var(--shadow-lg); /* modal, dialog */
+  --elevation-5: var(--shadow-xl); /* toast, notification */
+
+  /* Extended: Border styles */
+  --border-width: 1px;
+  --border-style: solid;
+  --card-border: var(--border-width) var(--border-style) var(--border);
+  --card-border-hover: var(--border-width) var(--border-style) var(--ring);
+
+  /* Extended: Blur/Glassmorphism */
+  --blur-none: 0;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 12px;
+  --blur-xl: 16px;
+  --blur-2xl: 24px;
+  --blur-3xl: 40px;
+  --glass-opacity: 0.8;
+  --glass-blur: var(--blur-md);
+  --glass-border: 1px solid oklch(1 0 0 / 0.1);
+
+  /* Extended: Focus ring */
+  --ring-width: 3px;
+  --ring-offset: 0px;
+  --ring-opacity: 0.5;
+
+  /* Extended: Surface variants */
+  --surface-raised: oklch(0.98 0 0);
+  --surface-sunken: oklch(0.96 0 0);
+  --surface-overlay: oklch(0 0 0 / 0.5);
+
+  /* Extended: Hover/Active effects */
+  --hover-scale: 1.02;
+  --active-scale: 0.98;
+  --hover-brightness: 1.05;
+  --active-brightness: 0.95;
 }
 
 .dark {
@@ -57,6 +159,7 @@
   --accent: oklch(0.371 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -73,13 +176,50 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.439 0 0);
+
+  /* Extended: Status colors - dark mode */
+  --warning: oklch(0.8 0.12 80);
+  --warning-foreground: oklch(0.15 0 0);
+  --success: oklch(0.75 0.17 145);
+  --success-foreground: oklch(0.15 0 0);
+  --info: oklch(0.7 0.13 250);
+  --info-foreground: oklch(0.15 0 0);
+
+  /* Extended: Shadows - dark mode (softer, more diffuse) */
+  --shadow-2xs: 0 1px 2px 0 oklch(0 0 0 / 0.1);
+  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.15);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.2), 0 1px 2px -1px oklch(0 0 0 / 0.15);
+  --shadow: 0 1px 3px 0 oklch(0 0 0 / 0.2), 0 1px 2px -1px oklch(0 0 0 / 0.15);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.25), 0 2px 4px -2px oklch(0 0 0 / 0.2);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.3), 0 4px 6px -4px oklch(0 0 0 / 0.2);
+  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.35), 0 8px 10px -6px oklch(0 0 0 / 0.25);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.5);
+
+  /* Extended: Elevation system - dark mode */
+  --elevation-1: var(--shadow-xs);
+  --elevation-2: var(--shadow-sm);
+  --elevation-3: var(--shadow-md);
+  --elevation-4: var(--shadow-lg);
+  --elevation-5: var(--shadow-xl);
+
+  /* Extended: Glassmorphism - dark mode */
+  --glass-opacity: 0.7;
+  --glass-border: 1px solid oklch(1 0 0 / 0.05);
+
+  /* Extended: Surface variants - dark mode */
+  --surface-raised: oklch(0.22 0 0);
+  --surface-sunken: oklch(0.12 0 0);
+  --surface-overlay: oklch(0 0 0 / 0.7);
 }
 
 @theme inline {
+  /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -111,6 +251,31 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  /* Elevation (semantic shadows) - exposed to Tailwind as shadow-elevation-* */
+  --shadow-elevation-1: var(--elevation-1);
+  --shadow-elevation-2: var(--elevation-2);
+  --shadow-elevation-3: var(--elevation-3);
+  --shadow-elevation-4: var(--elevation-4);
+  --shadow-elevation-5: var(--elevation-5);
+
+  /* Surface colors */
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-overlay: var(--surface-overlay);
+
+  /* Transitions - timing functions */
+  --transition-timing-function-default: var(--easing-default);
+  --transition-timing-function-in: var(--easing-in);
+  --transition-timing-function-out: var(--easing-out);
+  --transition-timing-function-in-out: var(--easing-in-out);
+
 }
 
 @layer base {
@@ -120,6 +285,48 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Theme-aware component utilities */
+@layer components {
+  /* Glass effect - themes can customize via --glass-blur and --glass-opacity */
+  .glass-effect {
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+
+  /* Card with theme-aware glass support */
+  .card-glass {
+    background: oklch(from var(--card) l c h / var(--glass-opacity));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+
+  /* Interactive hover effect using theme variables */
+  .hover-lift {
+    transition: transform var(--duration-fast) var(--easing-default),
+                box-shadow var(--duration-fast) var(--easing-default);
+  }
+  .hover-lift:hover {
+    transform: scale(var(--hover-scale));
+  }
+  .hover-lift:active {
+    transform: scale(var(--active-scale));
+  }
+
+  /* Surface variants */
+  .surface-raised {
+    background-color: var(--surface-raised);
+  }
+  .surface-sunken {
+    background-color: var(--surface-sunken);
+  }
+
+}
+
+/* Disable transitions class for zero-flicker theme switching */
+.disable-transitions * {
+  transition: none !important;
 }
 
 /* View Transition Wave Effect */
@@ -156,3 +363,5 @@
   /* Apply the reveal animation */
   animation: reveal 0.4s ease-in-out forwards;
 }
+
+

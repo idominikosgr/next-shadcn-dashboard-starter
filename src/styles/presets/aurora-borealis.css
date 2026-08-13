@@ -1,0 +1,75 @@
+/**
+ * @preset Aurora Borealis
+ * @category community
+ * @description Cool northern lights inspired theme
+ */
+
+:root[data-theme-preset="aurora-borealis"] {
+  --radius: 0.75rem;
+  --font-sans: Inter, sans-serif;
+  --background: #f0f9ff;
+  --foreground: #1e3a5f;
+  --card: #ffffff;
+  --card-foreground: #1e3a5f;
+  --popover: #ffffff;
+  --popover-foreground: #1e3a5f;
+  --primary: #0ea5e9;
+  --primary-foreground: #ffffff;
+  --secondary: #e0f2fe;
+  --secondary-foreground: #1e3a5f;
+  --muted: #f0f9ff;
+  --muted-foreground: #64748b;
+  --accent: #c4b5fd;
+  --accent-foreground: #1e3a5f;
+  --destructive: #f43f5e;
+  --border: #bae6fd;
+  --input: #e0f2fe;
+  --ring: #0ea5e9;
+  --chart-1: #0ea5e9;
+  --chart-2: #8b5cf6;
+  --chart-3: #06b6d4;
+  --chart-4: #10b981;
+  --chart-5: #f43f5e;
+  --sidebar: #e0f2fe;
+  --sidebar-foreground: #1e3a5f;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #c4b5fd;
+  --sidebar-accent-foreground: #1e3a5f;
+  --sidebar-border: #bae6fd;
+  --sidebar-ring: #0ea5e9;
+}
+
+.dark[data-theme-preset="aurora-borealis"] {
+  --background: #0c1929;
+  --foreground: #e2e8f0;
+  --card: #1e293b;
+  --card-foreground: #e2e8f0;
+  --popover: #1e293b;
+  --popover-foreground: #e2e8f0;
+  --primary: #38bdf8;
+  --primary-foreground: #0c1929;
+  --secondary: #1e3a5f;
+  --secondary-foreground: #e2e8f0;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --accent: #8b5cf6;
+  --accent-foreground: #e2e8f0;
+  --destructive: #f43f5e;
+  --border: #334155;
+  --input: #1e3a5f;
+  --ring: #38bdf8;
+  --chart-1: #38bdf8;
+  --chart-2: #a78bfa;
+  --chart-3: #22d3ee;
+  --chart-4: #34d399;
+  --chart-5: #fb7185;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #38bdf8;
+  --sidebar-primary-foreground: #0c1929;
+  --sidebar-accent: #8b5cf6;
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: #334155;
+  --sidebar-ring: #38bdf8;
+}

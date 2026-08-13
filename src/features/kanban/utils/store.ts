@@ -5,6 +5,7 @@ import { UniqueIdentifier } from '@dnd-kit/core';
 import { Column } from '../components/board-column';
 
 export type Status = 'TODO' | 'IN_PROGRESS' | 'DONE';
+export type Priority = 'low' | 'medium' | 'high';
 
 const defaultCols = [
   {
@@ -15,11 +16,24 @@ const defaultCols = [
 
 export type ColumnId = (typeof defaultCols)[number]['id'];
 
+export type Assignee = {
+  name: string;
+  avatar?: string;
+};
+
 export type Task = {
   id: string;
   title: string;
   description?: string;
   status: Status;
+  priority: Priority;
+  assignee?: Assignee;
+};
+
+export const statusConfig: Record<Status, { label: string; color: string }> = {
+  TODO: { label: 'Todo', color: 'bg-slate-500' },
+  IN_PROGRESS: { label: 'Progress', color: 'bg-blue-500' },
+  DONE: { label: 'Done', color: 'bg-green-500' }
 };
 
 export type State = {
@@ -32,17 +46,35 @@ const initialTasks: Task[] = [
   {
     id: 'task1',
     status: 'TODO',
-    title: 'Project initiation and planning'
+    title: 'Project initiation and planning',
+    description: 'Define project scope, objectives, and key deliverables',
+    priority: 'high',
+    assignee: {
+      name: 'Alex Morgan',
+      avatar: 'https://github.com/shadcn.png'
+    }
   },
   {
     id: 'task2',
     status: 'TODO',
-    title: 'Gather requirements from stakeholders'
+    title: 'Gather requirements from stakeholders',
+    description:
+      'Conduct meetings with stakeholders to gather detailed requirements',
+    priority: 'medium',
+    assignee: {
+      name: 'Jordan Lee',
+      avatar: 'https://github.com/leerob.png'
+    }
   }
 ];
 
 export type Actions = {
-  addTask: (title: string, description?: string) => void;
+  addTask: (
+    title: string,
+    description?: string,
+    priority?: Priority,
+    assignee?: Assignee
+  ) => void;
   addCol: (title: string) => void;
   dragTask: (id: string | null) => void;
   removeTask: (title: string) => void;
@@ -58,11 +90,23 @@ export const useTaskStore = create<State & Actions>()(
       tasks: initialTasks,
       columns: defaultCols,
       draggedTask: null,
-      addTask: (title: string, description?: string) =>
+      addTask: (
+        title: string,
+        description?: string,
+        priority: Priority = 'medium',
+        assignee?: Assignee
+      ) =>
         set((state) => ({
           tasks: [
             ...state.tasks,
-            { id: uuid(), title, description, status: 'TODO' }
+            {
+              id: uuid(),
+              title,
+              description,
+              status: 'TODO',
+              priority,
+              assignee
+            }
           ]
         })),
       updateCol: (id: UniqueIdentifier, newName: string) =>

@@ -138,7 +138,9 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
+            'group/sidebar-wrapper flex h-svh w-full',
+            // Inset and floating-inset variants get sidebar background on wrapper
+            'has-data-[variant=inset]:bg-sidebar has-data-[variant=floating-inset]:bg-sidebar',
             className
           )}
           {...props}
@@ -159,7 +161,7 @@ function Sidebar({
   ...props
 }: React.ComponentProps<'div'> & {
   side?: 'left' | 'right';
-  variant?: 'sidebar' | 'floating' | 'inset';
+  variant?: 'sidebar' | 'floating' | 'inset' | 'floating-inset';
   collapsible?: 'offcanvas' | 'icon' | 'none';
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
@@ -220,7 +222,7 @@ function Sidebar({
           'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear',
           'group-data-[collapsible=offcanvas]:w-0',
           'group-data-[side=right]:rotate-180',
-          variant === 'floating' || variant === 'inset'
+          variant === 'floating' || variant === 'inset' || variant === 'floating-inset'
             ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]'
             : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)'
         )}
@@ -232,8 +234,8 @@ function Sidebar({
           side === 'left'
             ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
             : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
-          // Adjust the padding for floating and inset variants.
-          variant === 'floating' || variant === 'inset'
+          // Adjust the padding for floating, inset, and floating-inset variants.
+          variant === 'floating' || variant === 'inset' || variant === 'floating-inset'
             ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
             : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
           className
@@ -243,7 +245,12 @@ function Sidebar({
         <div
           data-sidebar='sidebar'
           data-slot='sidebar-inner'
-          className='bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm'
+          className={cn(
+            'bg-sidebar flex h-full w-full flex-col',
+            // Floating and floating-inset get the floating sidebar styles
+            (variant === 'floating' || variant === 'floating-inset') &&
+              'border-sidebar-border rounded-lg border [box-shadow:var(--elevation-1)]'
+          )}
         >
           {children}
         </div>
@@ -309,7 +316,17 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
       data-slot='sidebar-inset'
       className={cn(
         'bg-background relative flex w-full flex-1 flex-col',
-        'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
+        // Inset and floating-inset get the inset main content styles
+        'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:[box-shadow:var(--elevation-1)] md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
+        'md:peer-data-[variant=floating-inset]:m-2 md:peer-data-[variant=floating-inset]:ml-0 md:peer-data-[variant=floating-inset]:rounded-xl md:peer-data-[variant=floating-inset]:[box-shadow:var(--elevation-1)] md:peer-data-[variant=floating-inset]:peer-data-[state=collapsed]:ml-2',
+        // Content layout support
+        'data-[content-layout=centered]:mx-auto data-[content-layout=centered]:max-w-(--breakpoint-2xl)',
+        // Adds right margin for inset/floating-inset sidebar in centered layout up to 113rem
+        'max-[113rem]:peer-data-[variant=inset]:data-[content-layout=centered]:mr-2',
+        'max-[113rem]:peer-data-[variant=floating-inset]:data-[content-layout=centered]:mr-2',
+        // On wider screens with collapsed sidebar, removes margin and sets margin auto for alignment
+        'min-[101rem]:peer-data-[variant=inset]:peer-data-[state=collapsed]:data-[content-layout=centered]:mr-auto',
+        'min-[101rem]:peer-data-[variant=floating-inset]:peer-data-[state=collapsed]:data-[content-layout=centered]:mr-auto',
         className
       )}
       {...props}

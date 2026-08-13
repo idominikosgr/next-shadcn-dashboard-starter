@@ -2,11 +2,20 @@ import Providers from '@/components/layout/providers';
 import { Toaster } from '@/components/ui/sonner';
 import { fontVariables } from '@/lib/font';
 import ThemeProvider from '@/components/layout/ThemeToggle/theme-provider';
+import { PreferencesStoreProvider } from '@/stores/preferences/preferences-provider';
+import { ThemeLabInitializer } from '@/components/theme-lab/theme-lab-initializer';
 import { cn } from '@/lib/utils';
 import type { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import NextTopLoader from 'nextjs-toploader';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import type { ThemeMode } from '@/types/preferences/theme';
+import type {
+  SidebarVariant,
+  SidebarCollapsible,
+  ContentLayout,
+  NavbarStyle
+} from '@/types/preferences/layout';
 import './globals.css';
 import './theme.css';
 
@@ -16,8 +25,9 @@ const META_THEME_COLORS = {
 };
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Unified Dashboard - Modern SaaS Design System',
+  description:
+    'A unified design system combining the best features of multiple dashboards with Next.js, Shadcn UI, and Tailwind CSS'
 };
 
 export const viewport: Viewport = {
@@ -30,8 +40,20 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-  const activeThemeValue = cookieStore.get('active_theme')?.value;
-  const isScaled = activeThemeValue?.endsWith('-scaled');
+
+  // Read preferences from cookies
+  const themeMode =
+    (cookieStore.get('theme_mode')?.value as ThemeMode) || 'light';
+  const themePreset = cookieStore.get('theme_preset')?.value || null;
+  const sidebarVariant =
+    (cookieStore.get('sidebar_variant')?.value as SidebarVariant) || 'sidebar';
+  const sidebarCollapsible =
+    (cookieStore.get('sidebar_collapsible')?.value as SidebarCollapsible) ||
+    'icon';
+  const contentLayout =
+    (cookieStore.get('content_layout')?.value as ContentLayout) || 'full-width';
+  const navbarStyle =
+    (cookieStore.get('navbar_style')?.value as NavbarStyle) || 'sticky';
 
   return (
     <html lang='en' suppressHydrationWarning>
@@ -51,10 +73,9 @@ export default async function RootLayout({
       <body
         className={cn(
           'bg-background overflow-hidden overscroll-none font-sans antialiased',
-          activeThemeValue ? `theme-${activeThemeValue}` : '',
-          isScaled ? 'theme-scaled' : '',
           fontVariables
         )}
+        suppressHydrationWarning
       >
         <NextTopLoader color='var(--primary)' showSpinner={false} />
         <NuqsAdapter>
@@ -65,10 +86,20 @@ export default async function RootLayout({
             disableTransitionOnChange
             enableColorScheme
           >
-            <Providers activeThemeValue={activeThemeValue as string}>
-              <Toaster />
-              {children}
-            </Providers>
+            <PreferencesStoreProvider
+              themeMode={themeMode}
+              themePreset={themePreset}
+              sidebarVariant={sidebarVariant}
+              sidebarCollapsible={sidebarCollapsible}
+              contentLayout={contentLayout}
+              navbarStyle={navbarStyle}
+            >
+              <ThemeLabInitializer />
+              <Providers>
+                <Toaster />
+                {children}
+              </Providers>
+            </PreferencesStoreProvider>
           </ThemeProvider>
         </NuqsAdapter>
       </body>

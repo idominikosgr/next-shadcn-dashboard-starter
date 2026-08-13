@@ -10,10 +10,21 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { UserAvatarProfile } from '@/components/user-avatar-profile';
-import { SignOutButton, useUser } from '@clerk/nextjs';
+// TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable
+// import { SignOutButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+
+// TEMPORARILY DISABLED CLERK AUTH - Mock user for preview
+const mockUser = {
+  imageUrl: '',
+  fullName: 'Demo User',
+  emailAddresses: [{ emailAddress: 'demo@example.com' }]
+};
+
 export function UserNav() {
-  const { user } = useUser();
+  // TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable
+  // const { user } = useUser();
+  const user = mockUser;
   const router = useRouter();
   if (user) {
     return (
@@ -50,7 +61,9 @@ export function UserNav() {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <SignOutButton redirectUrl='/auth/sign-in' />
+            {/* TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable */}
+            {/* <SignOutButton redirectUrl='/auth/sign-in' /> */}
+            <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

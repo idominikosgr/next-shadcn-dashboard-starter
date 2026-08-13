@@ -1,0 +1,75 @@
+/**
+ * @preset Sky Social
+ * @category community
+ * @description Light blue social media inspired theme
+ */
+
+:root[data-theme-preset="sky-social"] {
+  --radius: 1.3rem;
+  --font-sans: Open Sans, sans-serif;
+  --background: #ffffff;
+  --foreground: #0f1419;
+  --card: #f7f8f8;
+  --card-foreground: #0f1419;
+  --popover: #ffffff;
+  --popover-foreground: #0f1419;
+  --primary: #1e9df1;
+  --primary-foreground: #ffffff;
+  --secondary: #0f1419;
+  --secondary-foreground: #ffffff;
+  --muted: #E5E5E6;
+  --muted-foreground: #0f1419;
+  --accent: #E3ECF6;
+  --accent-foreground: #1e9df1;
+  --destructive: #f4212e;
+  --border: #e1eaef;
+  --input: #f7f9fa;
+  --ring: #1da1f2;
+  --chart-1: #1e9df1;
+  --chart-2: #00b87a;
+  --chart-3: #f7b928;
+  --chart-4: #17bf63;
+  --chart-5: #e0245e;
+  --sidebar: #f7f8f8;
+  --sidebar-foreground: #0f1419;
+  --sidebar-primary: #1e9df1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #E3ECF6;
+  --sidebar-accent-foreground: #1e9df1;
+  --sidebar-border: #e1e8ed;
+  --sidebar-ring: #1da1f2;
+}
+
+.dark[data-theme-preset="sky-social"] {
+  --background: #15202b;
+  --foreground: #d9d9d9;
+  --card: #192734;
+  --card-foreground: #d9d9d9;
+  --popover: #192734;
+  --popover-foreground: #d9d9d9;
+  --primary: #1da1f2;
+  --primary-foreground: #ffffff;
+  --secondary: #253341;
+  --secondary-foreground: #d9d9d9;
+  --muted: #38444d;
+  --muted-foreground: #8899a6;
+  --accent: #1c3a52;
+  --accent-foreground: #1da1f2;
+  --destructive: #e0245e;
+  --border: #38444d;
+  --input: #253341;
+  --ring: #1da1f2;
+  --chart-1: #1da1f2;
+  --chart-2: #17bf63;
+  --chart-3: #ffad1f;
+  --chart-4: #e0245e;
+  --chart-5: #794bc4;
+  --sidebar: #15202b;
+  --sidebar-foreground: #d9d9d9;
+  --sidebar-primary: #1da1f2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1c3a52;
+  --sidebar-accent-foreground: #1da1f2;
+  --sidebar-border: #38444d;
+  --sidebar-ring: #1da1f2;
+}

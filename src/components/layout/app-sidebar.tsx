@@ -31,7 +31,8 @@ import {
 import { UserAvatarProfile } from '@/components/user-avatar-profile';
 import { navItems } from '@/constants/data';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { useUser } from '@clerk/nextjs';
+// TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable
+// import { useUser } from '@clerk/nextjs';
 import {
   IconBell,
   IconChevronRight,
@@ -41,7 +42,8 @@ import {
   IconPhotoUp,
   IconUserCircle
 } from '@tabler/icons-react';
-import { SignOutButton } from '@clerk/nextjs';
+// TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable
+// import { SignOutButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
@@ -59,10 +61,27 @@ const tenants = [
   { id: '3', name: 'Gamma Ltd' }
 ];
 
-export default function AppSidebar() {
+// TEMPORARILY DISABLED CLERK AUTH - Mock user for preview
+const mockUser = {
+  imageUrl: '',
+  fullName: 'Demo User',
+  emailAddresses: [{ emailAddress: 'demo@example.com' }]
+};
+
+type AppSidebarProps = {
+  variant?: 'sidebar' | 'floating' | 'inset' | 'floating-inset';
+  collapsible?: 'offcanvas' | 'icon' | 'none';
+};
+
+export default function AppSidebar({
+  variant = 'sidebar',
+  collapsible = 'icon'
+}: AppSidebarProps) {
   const pathname = usePathname();
   const { isOpen } = useMediaQuery();
-  const { user } = useUser();
+  // TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable
+  // const { user } = useUser();
+  const user = mockUser;
   const router = useRouter();
   const handleSwitchTenant = (_tenantId: string) => {
     // Tenant switching functionality would be implemented here
@@ -75,7 +94,7 @@ export default function AppSidebar() {
   }, [isOpen]);
 
   return (
-    <Sidebar collapsible='icon'>
+    <Sidebar variant={variant} collapsible={collapsible}>
       <SidebarHeader>
         <OrgSwitcher
           tenants={tenants}
@@ -200,7 +219,9 @@ export default function AppSidebar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <IconLogout className='mr-2 h-4 w-4' />
-                  <SignOutButton redirectUrl='/auth/sign-in' />
+                  {/* TEMPORARILY DISABLED CLERK AUTH - Uncomment below to re-enable */}
+                  {/* <SignOutButton redirectUrl='/auth/sign-in' /> */}
+                  <span>Log out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

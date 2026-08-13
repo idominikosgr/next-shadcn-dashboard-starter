@@ -1,174 +1,395 @@
-<p align="center">
-<h1 align="center">Admin Dashboard Starter Template with Next.js &amp; Shadcn UI</h1>
+# 🎨 Nexus Dashboard - Modern SaaS Design System
 
-<div align="center">Built with the Next.js 16 App Router, Tailwind CSS &amp; Shadcn UI components</div>
-
-<br />
+A production-ready, unified design system combining the best features from multiple dashboard implementations, built with Next.js 16, Shadcn UI, and Tailwind CSS 4.
 
 <div align="center">
-  <a href="https://dub.sh/shadcn-dashboard"><strong>View Demo</strong></a>
+
+**Built for developers creating modern SaaS applications**
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38bdf8)](https://tailwindcss.com)
+
 </div>
-<br />
+
+---
+
+## ✨ Unique Features
+
+This unified dashboard combines the best features from two carefully selected dashboard implementations:
+
+### 🎭 Advanced Theme System
+
+- **✨ View Transition API Animation** - Circular reveal effect when switching light/dark modes
+- **⚡ Zero-Flicker Preset Switching** - Instant theme changes without visual artifacts
+- **🌈 4 Beautiful Theme Presets** - Default, Brutalist, Tangerine, Soft Pop
+- **🎨 OKLCH Color Space** - Modern, perceptually uniform colors for better dark mode
+- **🔄 Dual-Layer Theming** - Independent light/dark mode and color preset control
+
+### ⚙️ On-the-Fly Customization
+
+- **Settings Popover** with live preview - No page reload required!
+- **Theme Preset Selector** with color swatches
+- **3 Sidebar Variants**: Inset, Sidebar, Floating
+- **2 Collapsible Modes**: Icon, OffCanvas
+- **2 Content Layouts**: Centered, Full Width
+- **2 Navbar Styles**: Sticky, Scroll
+- **Cookie Persistence** - Settings saved across sessions
+
+### 🚀 Premium Features
+
+- **📊 Kanban Board** - Drag-and-drop task management with localStorage
+- **📈 Advanced Data Tables** - Server-side search, filtering, pagination with Nuqs
+- **⌨️ Command Palette** - kbar integration for Cmd+K navigation
+- **🔐 Clerk Authentication** - Production-ready auth (currently mocked for demo)
+- **📱 Fully Responsive** - Mobile-first with adaptive layouts
+- **♿ Accessible** - ARIA labels, keyboard navigation, screen reader support
+- **50+ Components** - Complete Shadcn UI library integrated
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Clone and navigate
+cd nexus-dashboard
+
+# Install dependencies
+pnpm install
+
+# Run development server
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see your dashboard.
+
+### Build for Production
+
+```bash
+pnpm build
+pnpm start
+```
+
+---
+
+## 🎨 Theme Presets
+
+### Default
+
+- **Style**: Neutral grayscale
+- **Use Case**: Corporate applications, professional tools
+- **Border Radius**: 0.625rem
+- **Shadows**: Subtle, soft
+
+### Brutalist
+
+- **Style**: Bold, high-contrast
+- **Use Case**: Modern, edgy applications
+- **Border Radius**: 0px (sharp corners)
+- **Shadows**: Hard 4px offset shadows
+- **Colors**: Orange primary (#FF6B35)
+
+### Tangerine
+
+- **Style**: Warm, organic
+- **Use Case**: Friendly, approachable apps
+- **Border Radius**: 0.625rem
+- **Shadows**: Soft
+- **Colors**: Orange tones (OKLCH 0.64 0.17 36.44°)
+
+### Soft Pop
+
+- **Style**: Playful, rounded
+- **Use Case**: Creative, modern applications
+- **Border Radius**: 1rem (large)
+- **Shadows**: Minimal
+- **Colors**: Purple primary
+
+---
+
+## 🎯 Architecture
+
+### Merged Features Matrix
+
+| Feature                    | Source      | Status        |
+| -------------------------- | ----------- | ------------- |
+| View Transition Animation  | Dashboard 1 | ✅ Integrated |
+| Zero-Flicker Switching     | Dashboard 2 | ✅ Integrated |
+| OKLCH Color System         | Dashboard 2 | ✅ Integrated |
+| Theme Presets (4 variants) | Dashboard 2 | ✅ Integrated |
+| Layout Controls UI         | Dashboard 2 | ✅ Integrated |
+| Preferences Store          | Dashboard 2 | ✅ Integrated |
+| kbar Command Palette       | Dashboard 1 | ✅ Integrated |
+| Kanban Board               | Dashboard 1 | ✅ Integrated |
+| Advanced Data Tables       | Dashboard 1 | ✅ Integrated |
+| Clerk Authentication       | Dashboard 1 | ✅ Integrated |
+| Feature-Based Structure    | Dashboard 1 | ✅ Integrated |
+| 50+ Shadcn Components      | Dashboard 1 | ✅ Integrated |
+
+### Project Structure
+
+```
+nexus-dashboard/
+├── src/
+│   ├── app/
+│   │   ├── dashboard/
+│   │   │   ├── overview/          # Analytics dashboard
+│   │   │   ├── product/           # Product management
+│   │   │   ├── kanban/            # Task board
+│   │   │   └── profile/           # User profile
+│   │   ├── globals.css            # Merged global styles + presets
+│   │   ├── theme.css              # Theme variants
+│   │   └── layout.tsx             # Root with providers
+│   ├── components/
+│   │   ├── ui/                    # 50+ Shadcn components
+│   │   ├── layout/
+│   │   │   ├── header.tsx         # Header with settings button
+│   │   │   └── app-sidebar.tsx    # Collapsible sidebar
+│   │   ├── settings/
+│   │   │   └── layout-controls.tsx # **NEW** Settings popover
+│   │   ├── forms/                 # Form component wrappers
+│   │   └── kbar/                  # Command palette
+│   ├── features/                  # Feature-based organization
+│   │   ├── kanban/
+│   │   ├── products/
+│   │   └── overview/
+│   ├── stores/
+│   │   └── preferences/           # **NEW** Zustand preferences store
+│   ├── lib/
+│   │   ├── theme-utils.ts         # **NEW** Merged theme utilities
+│   │   └── layout-utils.ts        # **NEW** Layout manipulation
+│   ├── styles/
+│   │   └── presets/               # **NEW** Theme CSS files
+│   │       ├── brutalist.css
+│   │       ├── tangerine.css
+│   │       └── soft-pop.css
+│   ├── types/
+│   │   └── preferences/           # **NEW** Theme/layout types
+│   └── server/
+│       └── server-actions.ts      # **NEW** Cookie actions
+└── package.json
+```
+
+---
+
+## 🛠️ Tech Stack
+
+**Core**
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript 5.9
+- Tailwind CSS 4.1
+
+**UI & Components**
+
+- Shadcn UI
+- Radix UI
+- Lucide React (icons)
+- Motion.js (animations)
+- Recharts (charts)
+
+**State & Data**
+
+- Zustand (preferences + Kanban)
+- TanStack Table
+- TanStack React Query
+- React Hook Form + Zod
+- Nuqs (type-safe URL params)
+
+**Developer Tools**
+
+- kbar (Command palette)
+- Biome (linting + formatting)
+- Husky (Git hooks)
+- Sentry (Error tracking)
+
+**Authentication**
+
+- Clerk (currently mocked)
+
+---
+
+## 💡 Usage Examples
+
+### Access Theme Settings
+
+```typescript
+import { usePreferencesStore } from '@/stores/preferences/preferences-provider';
+
+function MyComponent() {
+  const themeMode = usePreferencesStore((s) => s.themeMode);
+  const themePreset = usePreferencesStore((s) => s.themePreset);
+
+  return <div>Theme: {themeMode} | Preset: {themePreset}</div>;
+}
+```
+
+### Programmatic Theme Control
+
+```typescript
+import {
+  updateThemeModeWithAnimation,
+  updateThemePreset
+} from '@/lib/theme-utils';
+
+// Animated light/dark toggle
+function handleThemeToggle(event: MouseEvent) {
+  const newMode = currentMode === 'light' ? 'dark' : 'light';
+  updateThemeModeWithAnimation(newMode, event); // Circular reveal!
+}
+
+// Instant preset change
+function handlePresetChange(preset: string) {
+  updateThemePreset(preset); // Zero flicker!
+}
+```
+
+### Layout Customization
+
+```typescript
+import { updateContentLayout, updateNavbarStyle } from '@/lib/layout-utils';
+
+updateContentLayout('centered'); // or 'full-width'
+updateNavbarStyle('sticky'); // or 'scroll'
+```
+
+---
+
+## 📚 Available Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Run production server
+pnpm lint         # Run Biome checks
+pnpm lint:fix     # Apply Biome fixes
+pnpm format       # Format code with Biome
+```
+
+---
+
+## 🎯 Roadmap
+
+### ✅ Completed (v2.0)
+
+- [x] Unified theme system with 4 presets
+- [x] View Transition API animation
+- [x] Zero-flicker preset switching
+- [x] On-the-fly settings customization
+- [x] Layout controls (sidebar, navbar, content)
+- [x] Merged CSS with OKLCH colors
+- [x] Preferences store with cookie persistence
+- [x] Updated documentation
+
+### 🚧 Planned (v2.1+)
+
+- [ ] Port Dashboard 2's CRM dashboard
+- [ ] Port Dashboard 2's Finance dashboard
+- [ ] Add unique components (ButtonGroup, InputGroup, Field, Empty)
+- [ ] Container query support
+- [ ] Slot-based styling pattern
+- [ ] More theme presets
+- [ ] Storybook integration
+- [ ] E2E tests with Playwright
+
+---
+
+## 📖 How It Works
+
+### Theme Animation System
+
+This dashboard implements a sophisticated **dual-animation** approach:
+
+**1. View Transition API (Light/Dark Mode)**
+
+```typescript
+// Circular reveal from click coordinates
+const transition = document.startViewTransition(() => {
+  document.documentElement.classList.toggle('dark', value === 'dark');
+});
+```
+
+- Captures click X/Y coordinates
+- Calculates radius for full-screen reveal
+- Animates with `clip-path: circle()`
+- Defined in `globals.css`
+
+**2. Zero-Flicker Technique (Preset Changes)**
+
+```typescript
+// Disable transitions → change → re-enable
+doc.classList.add('disable-transitions');
+doc.classList.toggle('dark', value === 'dark');
+requestAnimationFrame(() => {
+  doc.classList.remove('disable-transitions');
+});
+```
+
+- Prevents visual jank
+- Instant updates
+- Re-enables transitions after browser reflow
+
+### CSS Architecture
+
+**Layered Approach:**
+
+1. Base styles (`globals.css`)
+2. Theme variants (`theme.css` from Dashboard 1)
+3. Preset overrides (`presets/*.css` from Dashboard 2)
+4. Component styles (Shadcn UI)
+
+**OKLCH Color System:**
+
+- Perceptually uniform
+- Better dark mode color relationships
+- Device-independent
+- Future-proof
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! This is meant to be a community-driven design system.
+
+**Ideas:**
+
+- Create new theme presets
+- Add dashboard layouts
+- Enhance components
+- Improve accessibility
+- Optimize performance
+
+---
+
+## 📄 License
+
+See LICENSE file for details.
+
+---
+
+## 🙏 Credits
+
+**Nexus Dashboard v2.0**
+
+Combines the best features from:
+
+- **Dashboard 1** (next-shadcn-dashboard1): View Transition API, kbar, Kanban, advanced architecture
+- **Dashboard 2** (studio-admin): OKLCH colors, theme presets, zero-flicker, layout controls
+
+Built with ❤️ using:
+
+- [Next.js](https://nextjs.org/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+---
+
 <div align="center">
-  <img src="/public/shadcn-dashboard.png" alt="Shadcn Dashboard Cover" style="max-width: 100%; border-radius: 8px;" />
+
+**Made for developers building modern SaaS applications**
+
+⭐ Star this repo if you find it useful!
+
 </div>
-
-## Overview
-
-This is an **admin dashboard starter template** built with **Next.js 16, Shadcn UI, and Tailwind CSS**.
-
-It gives you a production-ready **dashboard UI** with authentication, charts, tables, forms, and a feature-based folder structure, perfect for **SaaS apps, internal tools, and admin panels**.
-
-### Tech Stack
-
-This template uses the following stack:
-
-- Framework - [Next.js 16](https://nextjs.org/16)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Auth - [Clerk](https://go.clerk.com/ILdYhn7)
-- Error tracking - [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy26q2-nextjs&utm_content=github-banner-project-tryfree)
-- Styling - [Tailwind CSS v4](https://tailwindcss.com)
-- Components - [Shadcn-ui](https://ui.shadcn.com)
-- Schema Validations - [Zod](https://zod.dev)
-- State Management - [Zustand](https://zustand-demo.pmnd.rs)
-- Search params state manager - [Nuqs](https://nuqs.47ng.com/)
-- Tables - [Tanstack Data Tables](https://ui.shadcn.com/docs/components/data-table) • [Dice table](https://www.diceui.com/docs/components/data-table)
-- Forms - [React Hook Form](https://ui.shadcn.com/docs/components/form)
-- Command+k interface - [kbar](https://kbar.vercel.app/)
-- Linting - [ESLint](https://eslint.org)
-- Pre-commit Hooks - [Husky](https://typicode.github.io/husky/)
-- Formatting - [Prettier](https://prettier.io)
-
-_If you are looking for a Tanstack start dashboard template, here is the [repo](https://git.new/tanstack-start-dashboard)._
-
-## Features
-
-- 🧱 Pre-built **admin dashboard layout** (sidebar, header, content area)
-
-- 📊 **Analytics overview** page with cards and charts
-
-- 📋 **Data tables** with server-side search, filter & pagination
-
-- 🔐 **Authentication** & user management via Clerk
-
-- 🧩 **Shadcn UI components** with Tailwind CSS styling
-
-- 🧠 Feature-based folder structure for scalable projects
-
-- ⚙️ Ready for **SaaS dashboards**, internal tools, and client admin panels
-
-## Use Cases
-
-You can use this Next.js + Shadcn UI dashboard starter to build:
-
-- SaaS admin dashboards
-
-- Internal tools & operations panels
-
-- Analytics dashboards
-
-- Client project admin panels
-
-- Boilerplate for new Next.js admin UI projects
-
-## Pages
-
-| Pages                                                                                                                                                                  | Specifications                                                                                                                                                                                                                                                          |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Signup / Signin](https://go.clerk.com/ILdYhn7)                                                                                                                        | Authentication with **Clerk** provides secure authentication and user management with multiple sign-in options including passwordless authentication, social logins, and enterprise SSO - all designed to enhance security while delivering a seamless user experience. |
-| [Dashboard Overview](https://shadcn-dashboard.kiranism.dev/dashboard)                                                                                                  | Cards with Recharts graphs for analytics. Parallel routes in the overview sections feature independent loading, error handling, and isolated component rendering.                                                                                                       |
-| [Product List (Table)](https://shadcn-dashboard.kiranism.dev/dashboard/product)                                                                                        | Tanstack tables with server side searching, filter, pagination by Nuqs which is a Type-safe search params state manager in nextjs                                                                                                                                       |
-| [Create Product Form](https://shadcn-dashboard.kiranism.dev/dashboard/product/new)                                                                                     | A Product Form with shadcn form (react-hook-form + zod).                                                                                                                                                                                                                |
-| [Profile](https://shadcn-dashboard.kiranism.dev/dashboard/profile)                                                                                                     | Clerk's full-featured account management UI that allows users to manage their profile and security settings                                                                                                                                                             |
-| [Kanban Board](https://shadcn-dashboard.kiranism.dev/dashboard/kanban)                                                                                                 | A Drag n Drop task management board with dnd-kit and zustand to persist state locally.                                                                                                                                                                                  |
-| [Not Found](https://shadcn-dashboard.kiranism.dev/dashboard/notfound)                                                                                                  | Not Found Page Added in the root level                                                                                                                                                                                                                                  |
-| [Global Error](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy26q2-nextjs&utm_content=github-banner-project-tryfree) | A centralized error page that captures and displays errors across the application. Integrated with **Sentry** to log errors, provide detailed reports, and enable replay functionality for better debugging.                                                            |
-
-## Feature based organization
-
-```plaintext
-src/
-├── app/ # Next.js App Router directory
-│ ├── (auth)/ # Auth route group
-│ │ ├── (signin)/
-│ ├── (dashboard)/ # Dashboard route group
-│ │ ├── layout.tsx
-│ │ ├── loading.tsx
-│ │ └── page.tsx
-│ └── api/ # API routes
-│
-├── components/ # Shared components
-│ ├── ui/ # UI components (buttons, inputs, etc.)
-│ └── layout/ # Layout components (header, sidebar, etc.)
-│
-├── features/ # Feature-based modules
-│ ├── feature/
-│ │ ├── components/ # Feature-specific components
-│ │ ├── actions/ # Server actions
-│ │ ├── schemas/ # Form validation schemas
-│ │ └── utils/ # Feature-specific utilities
-│ │
-├── lib/ # Core utilities and configurations
-│ ├── auth/ # Auth configuration
-│ ├── db/ # Database utilities
-│ └── utils/ # Shared utilities
-│
-├── hooks/ # Custom hooks
-│ └── use-debounce.ts
-│
-├── stores/ # Zustand stores
-│ └── dashboard-store.ts
-│
-└── types/ # TypeScript types
-└── index.ts
-```
-
-## Getting Started
-
-> [!NOTE]  
-> This admin dashboard starter uses **Next.js 16 (App Router)** with **React 19** and **Shadcn UI**. Follow these steps to run it locally:
-
-Clone the repo:
-
-```
-git clone https://github.com/Kiranism/next-shadcn-dashboard-starter.git
-```
-
-- `bun install`
-- Create a `.env.local` file by copying the example environment file:
-  `cp env.example.txt .env.local`
-- Add the required environment variables to the `.env.local` file.
-- `bun run dev`
-
-##### Environment Configuration Setup
-
-To configure the environment for this project, refer to the `env.example.txt` file. This file contains the necessary environment variables required for authentication and error tracking.
-
-You should now be able to access the application at http://localhost:3000.
-
-> [!WARNING]
-> After cloning or forking the repository, be cautious when pulling or syncing with the latest changes, as this may result in breaking conflicts.
-
-Cheers! 🥂
-
-<!--
-
-SEO keywords:
-
-nextjs admin dashboard, nextjs dashboard template, shadcn ui dashboard,
-
-admin dashboard starter, dashboard ui template, nextjs shadcn admin panel,
-
-react admin dashboard, tailwind css admin dashboard
-
--->
-
-## Star History
-
-<a href="https://www.star-history.com/#Kiranism/next-shadcn-dashboard-starter&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Kiranism/next-shadcn-dashboard-starter&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Kiranism/next-shadcn-dashboard-starter&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Kiranism/next-shadcn-dashboard-starter&type=date&legend=top-left" />
- </picture>
-</a>

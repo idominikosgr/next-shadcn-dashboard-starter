@@ -4,6 +4,7 @@
 
 import { faker } from '@faker-js/faker';
 import { matchSorter } from 'match-sorter'; // For filtering
+import usersData from './user-data.json';
 
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -155,3 +156,134 @@ export const fakeProducts = {
 
 // Initialize sample products
 fakeProducts.initialize();
+
+// Define the shape of User data
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  avatar: string;
+  role: string;
+  plan: string;
+  billing: string;
+  status: string;
+  joinedDate: string;
+  lastLogin: string;
+};
+
+// Mock user data store
+export const fakeUsers = {
+  records: usersData as User[],
+
+  // Get all users with optional filtering and search
+  async getAll({
+    role = [],
+    status = [],
+    plan = [],
+    search
+  }: {
+    role?: string[];
+    status?: string[];
+    plan?: string[];
+    search?: string;
+  }) {
+    let users = [...this.records];
+
+    // Filter users based on selected roles
+    if (role.length > 0) {
+      users = users.filter((user) => role.includes(user.role));
+    }
+
+    // Filter users based on selected statuses
+    if (status.length > 0) {
+      users = users.filter((user) => status.includes(user.status));
+    }
+
+    // Filter users based on selected plans
+    if (plan.length > 0) {
+      users = users.filter((user) => plan.includes(user.plan));
+    }
+
+    // Search functionality across multiple fields
+    if (search) {
+      users = matchSorter(users, search, {
+        keys: ['name', 'email', 'role', 'plan', 'status']
+      });
+    }
+
+    return users;
+  },
+
+  // Get paginated results with optional filtering and search
+  async getUsers({
+    page = 1,
+    limit = 10,
+    role,
+    status,
+    plan,
+    search
+  }: {
+    page?: number;
+    limit?: number;
+    role?: string;
+    status?: string;
+    plan?: string;
+    search?: string;
+  }) {
+    await delay(1000);
+    const roleArray = role ? role.split('.') : [];
+    const statusArray = status ? status.split('.') : [];
+    const planArray = plan ? plan.split('.') : [];
+
+    const allUsers = await this.getAll({
+      role: roleArray,
+      status: statusArray,
+      plan: planArray,
+      search
+    });
+    const totalUsers = allUsers.length;
+
+    // Pagination logic
+    const offset = (page - 1) * limit;
+    const paginatedUsers = allUsers.slice(offset, offset + limit);
+
+    // Mock current time
+    const currentTime = new Date().toISOString();
+
+    // Return paginated response
+    return {
+      success: true,
+      time: currentTime,
+      message: 'Sample data for testing and learning purposes',
+      total_users: totalUsers,
+      offset,
+      limit,
+      users: paginatedUsers
+    };
+  },
+
+  // Get a specific user by their ID
+  async getUserById(id: number) {
+    await delay(1000);
+
+    // Find the user by their ID
+    const user = this.records.find((user) => user.id === id);
+
+    if (!user) {
+      return {
+        success: false,
+        message: `User with ID ${id} not found`
+      };
+    }
+
+    // Mock current time
+    const currentTime = new Date().toISOString();
+
+    return {
+      success: true,
+      time: currentTime,
+      message: `User with ID ${id} found`,
+      user
+    };
+  }
+};

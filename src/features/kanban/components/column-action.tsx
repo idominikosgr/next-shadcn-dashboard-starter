@@ -26,10 +26,12 @@ import { toast } from 'sonner';
 
 export function ColumnActions({
   title,
-  id
+  id,
+  taskCount
 }: {
   title: string;
   id: UniqueIdentifier;
+  taskCount?: number;
 }) {
   const [name, setName] = React.useState(title);
   const updateCol = useTaskStore((state) => state.updateCol);
@@ -40,22 +42,30 @@ export function ColumnActions({
 
   return (
     <>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setIsEditDisable(!editDisable);
-          updateCol(id, name);
-          toast(`${title} updated to ${name}`);
-        }}
-      >
-        <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className='mt-0! mr-auto text-base disabled:cursor-pointer disabled:border-none disabled:opacity-100'
-          disabled={editDisable}
-          ref={inputRef}
-        />
-      </form>
+      <div className='flex flex-1 items-center gap-2'>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setIsEditDisable(!editDisable);
+            updateCol(id, name);
+            toast(`${title} updated to ${name}`);
+          }}
+          className='flex-1'
+        >
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className='mt-0! text-base disabled:cursor-pointer disabled:border-none disabled:opacity-100'
+            disabled={editDisable}
+            ref={inputRef}
+          />
+        </form>
+        {taskCount !== undefined && (
+          <span className='bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-xs font-medium'>
+            {taskCount}
+          </span>
+        )}
+      </div>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant='secondary' className='ml-1'>
